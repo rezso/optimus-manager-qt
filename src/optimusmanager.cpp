@@ -528,7 +528,11 @@ bool OptimusManager::killProcess(const QByteArray &name)
             continue;
 
         QFile processName(process.filePath(QStringLiteral("cmdline")));
-        processName.open(QIODevice::ReadOnly);
+        if (!processName.open(QIODevice::ReadOnly)) {
+            qWarning() << "Could not open file:"
+                       << processName.fileName()
+                       << processName.errorString();
+        }
         const QByteArray processPath = processName.readLine();
         if (!processPath.isEmpty() && processPath.chopped(1) == name) {
             kill(pid, SIGTERM);

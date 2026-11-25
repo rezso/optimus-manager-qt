@@ -26,6 +26,7 @@
 #include "autostartmanager/abstractautostartmanager.h"
 
 #include <QFileDialog>
+#include <QFileInfo>
 #include <QMessageBox>
 #include <QMetaEnum>
 #include <QTextStream>
@@ -260,7 +261,7 @@ void SettingsDialog::browseTempConfigPath()
     QFileDialog dialog(this, tr("Select temporary configuration file"));
     dialog.setNameFilter(tr("Config files (*.conf);;All files(*)"));
 
-    const QFileInfo previousName = ui->optimusConfigPathEdit->text();
+    const QFileInfo previousName(ui->optimusConfigPathEdit->text());
     dialog.setDirectory(previousName.exists() ? previousName.path() : QDir::homePath());
 
     if (dialog.exec() == QDialog::Accepted)
@@ -273,7 +274,7 @@ void SettingsDialog::exportOptimusConfig()
     dialog.setNameFilter(tr("Config files (*.conf);;All files(*)"));
     dialog.setAcceptMode(QFileDialog::AcceptSave);
 
-    const QFileInfo previousName = ui->optimusConfigPathEdit->text();
+    const QFileInfo previousName(ui->optimusConfigPathEdit->text());
     dialog.setDirectory(previousName.exists() ? previousName.path() : QDir::homePath());
 
     if (dialog.exec() == QDialog::Accepted)
@@ -286,7 +287,7 @@ void SettingsDialog::importOptimusConfig()
     dialog.setNameFilter(tr("Config files (*.conf);;All files(*)"));
     dialog.setFileMode(QFileDialog::ExistingFile);
 
-    const QFileInfo previousName = ui->optimusConfigPathEdit->text();
+    const QFileInfo previousName(ui->optimusConfigPathEdit->text());
     dialog.setDirectory(previousName.exists() ? previousName.path() : QDir::homePath());
 
     if (dialog.exec() == QDialog::Accepted)
@@ -477,7 +478,7 @@ void SettingsDialog::browseIcon(QLineEdit *iconNameEdit)
     dialog.setNameFilter(tr("Images (*.png *.jpg *.bmp);;All files(*)"));
     dialog.setFileMode(QFileDialog::ExistingFile);
 
-    const QFileInfo previousName = iconNameEdit->text();
+    const QFileInfo previousName(iconNameEdit->text());
     dialog.setDirectory(previousName.exists() ? previousName.path() : QDir::homePath());
 
     if (dialog.exec() == QDialog::Accepted)

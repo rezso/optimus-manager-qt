@@ -24,7 +24,7 @@ option(WITH_PLASMA "Use additional KDE API feautures")
 find_package(ECM REQUIRED NO_MODULE)
 list(APPEND CMAKE_MODULE_PATH ${ECM_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
-find_package(Qt5 5.10 COMPONENTS Widgets DBus X11Extras LinguistTools REQUIRED)
+find_package(Qt6 6.10 COMPONENTS GuiPrivate Widgets DBus LinguistTools REQUIRED)
 if(WITH_PLASMA)
     find_package(KF5 COMPONENTS Notifications IconThemes REQUIRED)
 endif()
@@ -35,7 +35,7 @@ include(GNUInstallDirs)
 set(QAPPLICATION_CLASS QApplication)
 add_subdirectory(src/third-party/singleapplication)
 
-qt5_add_translation(QM_FILES
+qt6_add_translation(QM_FILES
     data/translations/${PROJECT_NAME}_de_DE.ts
     data/translations/${PROJECT_NAME}_es_ES.ts
     data/translations/${PROJECT_NAME}_fi_FI.ts
@@ -69,7 +69,7 @@ add_executable(${PROJECT_NAME}
     src/xdgdesktopportal.cpp
 )
 
-target_link_libraries(${PROJECT_NAME} PRIVATE SingleApplication::SingleApplication Qt5::DBus Qt5::X11Extras)
+target_link_libraries(${PROJECT_NAME} PRIVATE SingleApplication::SingleApplication Qt6::DBus Qt6::GuiPrivate)
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
 if(WITH_PLASMA)
     target_link_libraries(${PROJECT_NAME} PRIVATE KF5::Notifications KF5::IconThemes)

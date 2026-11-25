@@ -147,6 +147,14 @@ void AppSettings::applyLocale(const QLocale &locale)
 {
     const QLocale newLocale = locale == defaultLocale() ? QLocale::system() : locale;
     QLocale::setDefault(newLocale);
-    s_appTranslator.load(newLocale, QStringLiteral(PROJECT_NAME), QStringLiteral("_"), QStandardPaths::locate(QStandardPaths::AppDataLocation, QStringLiteral("translations"), QStandardPaths::LocateDirectory));
-    s_qtTranslator.load(newLocale, QStringLiteral("qt"), QStringLiteral("_"), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+    const bool appLoaded = s_appTranslator.load(newLocale, QStringLiteral(PROJECT_NAME), QStringLiteral("_"), QStandardPaths::locate(QStandardPaths::AppDataLocation, QStringLiteral("translations"), QStandardPaths::LocateDirectory));
+    const bool qtLoaded = s_qtTranslator.load(newLocale, QStringLiteral("qt"), QStringLiteral("_"), QLibraryInfo::path(QLibraryInfo::TranslationsPath));
+
+    if (!appLoaded) {
+        qWarning() << "The application translation cannot be loaded.";
+    }
+
+    if (!qtLoaded) {
+        qWarning() << "The Qt translation cannot be loaded.";
+    }
 }
