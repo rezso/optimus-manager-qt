@@ -26,7 +26,7 @@ list(APPEND CMAKE_MODULE_PATH ${ECM_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cma
 
 find_package(Qt6 6.10 COMPONENTS GuiPrivate Widgets DBus LinguistTools REQUIRED)
 if(WITH_PLASMA)
-    find_package(KF5 COMPONENTS Notifications IconThemes REQUIRED)
+    find_package(KF6 COMPONENTS Notifications StatusNotifierItem IconThemes REQUIRED)
 endif()
 
 include(ECMInstallIcons)
@@ -72,7 +72,7 @@ add_executable(${PROJECT_NAME}
 target_link_libraries(${PROJECT_NAME} PRIVATE SingleApplication::SingleApplication Qt6::DBus Qt6::GuiPrivate)
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
 if(WITH_PLASMA)
-    target_link_libraries(${PROJECT_NAME} PRIVATE KF5::Notifications KF5::IconThemes)
+    target_link_libraries(${PROJECT_NAME} PRIVATE KF6::Notifications KF6::StatusNotifierItem KF6::IconThemes KF6::IconWidgets)
     target_compile_definitions(${PROJECT_NAME} PRIVATE WITH_PLASMA)
 endif()
 
